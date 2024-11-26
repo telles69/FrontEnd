@@ -11,7 +11,7 @@ const Demo = () => {
                 bgRepeat="no-repeat"
                 bgSize="cover"
                 bgPosition="center"
-                bgImage="url('https://4kwallpapers.com/images/wallpapers/your-name-shooting-4480x2520-14938.jpg ')"
+                bgImage="url('https://wallpapers.com/images/hd/las-vegas-bellagio-fountains-azsz8a5sepqzyzk6.jpg')"
                 position="absolute"
                 top="0"
                 left="0"
@@ -20,7 +20,7 @@ const Demo = () => {
                 zIndex="-1"
             />
 
-            <Login cadastrar={true}></Login>
+            <Login cadastrar={false}></Login>
         </Box>
     );
 };
