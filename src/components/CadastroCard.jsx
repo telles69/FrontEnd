@@ -10,7 +10,7 @@ import axios from '../utils/axios';
 import { useState } from "react"
 
 
-export default function Login() {
+export default function Cadastro() {
 
     const [nome, setNome] = useState('')
     const [senha, setSenha] = useState('')
@@ -22,17 +22,14 @@ export default function Login() {
     const handleClick = async () => {
         try {
           
-           const Usuario = await axios.post('/user/login', { //mudar
+           const Usuario = await axios.post('/usuario', { 
              nome: nome,
              senha: senha,
              email: email, 
-             CPF: CPF,
-             cargo: cargo,
+             cpf: CPF,
+             idCargo: cargo,
              ocupacao: ocupacao
           })
-          localStorage.setItem('token', Usuario.token)
-          setData(Usuario.username)
-          alert('Seu usuario e: ${data}')
         } catch (error) {
           console.log(error.message);
           
@@ -52,29 +49,45 @@ export default function Login() {
                     width="25%"
                     height="25%"
                     p="6"
-                    bg="rgba(255, 255, 255, 0.2)" 
+                    bg="rgba(255, 255, 255, 0.2)"
                     borderRadius="lg"
                     boxShadow="lg"
                     backdropFilter="blur(10px)" 
                     border="1px solid rgba(255, 255, 255, 0.3)" 
                 >
-                    <Box textAlign="center" mb="6">
+                   <Box textAlign="center" mb="6">
                         <Image src="https://gainblers.com/imagenes/casas/pokerstarssports/pokerstars-logo.png" alt="LOGO" />
                         <Box as="h2" fontSize="2xl" fontWeight="bold">
-                            Login
+                            Cadastro
                         </Box>
                     </Box>
                     <Stack gap="4">
 
-                        <Field >
+
+                        <Field>
+                            <Field label="Nome">
+                                <Input onChange={(a) => setNome(a.target.value)} placeholder="Digite seu Nome" _placeholder={{ color: "gray.800" }} />
+                            </Field>
+                            <Field label="Email">
+                                <Input onChange={(a) => setEmail(a.target.value)} placeholder="Digite seu Email" _placeholder={{ color: "gray.800" }} />
+                            </Field>
                             <Field label="CPF">
-                                <Input placeholder="Digite seu CPF" _placeholder={{ color: "gray.800" }} />
+                                <Input onChange={(a) => setCPF(a.target.value)} placeholder="Digite seu CPF" _placeholder={{ color: "gray.800" }} />
                             </Field>
                             <Field label="Senha">
-                                <PasswordInput placeholder="Digite sua senha" _placeholder={{ color: "gray.800" }} />
+                                <PasswordInput onChange={(a) => setSenha(a.target.value)} placeholder="Digite sua senha" _placeholder={{ color: "gray.800" }} />
+                            </Field>
+                            <Field label="Cargo">
+                                <NativeSelectRoot variant="subtle" size="lg" width="240px">
+                                    <NativeSelectField  onChange={(e) => setCargo(e.currentTarget.value)} placeholder="Selecione uma opcao">
+                                        <option value="1">Cliente</option>
+                                    </NativeSelectField>
+                                </NativeSelectRoot>
+                            </Field>
+                            <Field label="Ocupação">
+                                <CheckboxCard onChange={(a) => setOcupacao(a.target.value)} label="Estudante"/>
                             </Field>
                         </Field>
-
                         <Button
                             borderRadius={20}
                             bgColor="white"
@@ -106,12 +119,12 @@ export default function Login() {
                         <HStack pt={1} alignSelf={"center"}>
                         </HStack>
                     </Stack>
-                    <Flex justifyContent="center" mt="6">
-                        <Button variant="outline" colorScheme="whiteAlpha" mr="2" onClick={goCreate} >
-                            Criar conta
+                    <Flex justifyContent="flex-end" mt="6">
+                        <Button variant="outline" colorScheme="whiteAlpha" mr="2" onClick={goLogin}>
+                            Faça Login
                         </Button>
-                        <Button variant="solid" colorScheme="teal">
-                            Entre
+                        <Button variant="solid" colorScheme="teal" onClick={handleClick}>
+                            Criar
                         </Button>
                     </Flex>
                 </Box>
