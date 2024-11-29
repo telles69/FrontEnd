@@ -9,7 +9,6 @@ import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-sele
 import axios from '../utils/axios';
 import { useState } from "react"
 
-
 export default function Cadastro() {
 
     const [nome, setNome] = useState('')
@@ -43,6 +42,7 @@ export default function Cadastro() {
     const goLogin = () => {
         router.push('/administrador/login')
     }
+
         return (
             <Center minHeight="100vh">
                 <Box

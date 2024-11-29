@@ -9,17 +9,19 @@ import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-sele
 import axios from '../utils/axios';
 import { useState, useEffect } from "react"
 import React from 'react';
+import { RiPencilFill } from "react-icons/ri";
+import Dialog from "./ClienteDialog"
 
-
-export default function Clientes() {        
+export default function Clientes() {
 
     const [allData, SetAllData] = useState([])
     const [error, SetError] = useState('')
 
     const handleclick = async () => {
         try {
-            const response = await axios.get('/usuario')
-            if (response.data && Array.isArray(response.data)) {                
+            const response = await axios.get('/usuario/get-junta')
+            if (response.data && Array.isArray(response.data)) {
+                console.log("nigga")
                 SetAllData(response.data);
             } else {
                 SetError("No valid data found or response format is incorrect");
@@ -28,9 +30,11 @@ export default function Clientes() {
             return res.status(500).send({ message: "Erro otario" })
         }
     }
+
     useEffect(() => {
         handleclick();
     }, []);
+
     return (
         <Center minHei ght="100vh">
             <Box
@@ -49,7 +53,7 @@ export default function Clientes() {
                         Seleção
                     </Box>
                 </Box>
-                <Table.Root size="lg" bg="rgba(255, 255, 255, 0.2)">
+                <Table.Root size="lg">
                     <Table.Header>
                         <Table.Row>
                             <Table.ColumnHeader>Nome</Table.ColumnHeader>
@@ -66,9 +70,10 @@ export default function Clientes() {
                                 <Table.Cell>{a.nome}</Table.Cell>
                                 <Table.Cell>{a.email}</Table.Cell>
                                 <Table.Cell>{a.cpf}</Table.Cell>
-                                <Table.Cell>{a.estudante}</Table.Cell>
-                                <Table.Cell>{a.id_Cargo}</Table.Cell>
-                                <Table.Cell textAlign="end">Butao</Table.Cell>
+                                {a.estudante && <Table.Cell>Sim</Table.Cell>}
+                                {!a.estudante && <Table.Cell>Não</Table.Cell>}
+                                <Table.Cell>{a.idCargo}</Table.Cell>
+                                <Table.Cell textAlign="end"><Dialog></Dialog></Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>
