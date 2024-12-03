@@ -11,18 +11,30 @@ import { useState, useEffect } from "react"
 import React from 'react';
 import { RiPencilFill } from "react-icons/ri";
 import Dialog from "./ClienteDialog"
+import { FaTrash } from "react-icons/fa";
 
 export default function Clientes() {
 
     const [allData, SetAllData] = useState([])
     const [error, SetError] = useState('')
 
+    function mandar (a) {
+        let novoId = a
+        return novoId
+    }
+    function tchau (a) {
+        let tchau = console.log(a)
+        return tchau
+    }
+
     const handleclick = async () => {
         try {
             const response = await axios.get('/usuario/get-junta')
-            if (response.data && Array.isArray(response.data)) {
-                console.log("nigga")
-                SetAllData(response.data);
+            console.log("response1")
+            console.log(response)
+            if (response && Array.isArray(response)) {
+                console.log("response2")
+                SetAllData(response);
             } else {
                 SetError("No valid data found or response format is incorrect");
             }
@@ -56,12 +68,12 @@ export default function Clientes() {
                 <Table.Root size="lg">
                     <Table.Header>
                         <Table.Row>
-                            <Table.ColumnHeader>Nome</Table.ColumnHeader>
+                            <Table.ColumnHeader borderRadius="10px 0px 0px 0px">Nome</Table.ColumnHeader>
                             <Table.ColumnHeader>Email</Table.ColumnHeader>
                             <Table.ColumnHeader>CPF</Table.ColumnHeader>
                             <Table.ColumnHeader>Estudante</Table.ColumnHeader>
                             <Table.ColumnHeader>Cargo</Table.ColumnHeader>
-                            <Table.ColumnHeader textAlign="end">Editar</Table.ColumnHeader>
+                            <Table.ColumnHeader textAlign="end"  borderRadius="0px 10px 0px 0px">Editar</Table.ColumnHeader>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -72,8 +84,8 @@ export default function Clientes() {
                                 <Table.Cell>{a.cpf}</Table.Cell>
                                 {a.estudante && <Table.Cell>Sim</Table.Cell>}
                                 {!a.estudante && <Table.Cell>Não</Table.Cell>}
-                                <Table.Cell>{a.idCargo}</Table.Cell>
-                                <Table.Cell textAlign="end"><Dialog></Dialog></Table.Cell>
+                                <Table.Cell>{a.descricao}</Table.Cell>
+                                <Table.Cell textAlign="end"><Dialog data={mandar(a.id)}></Dialog><Button size="sm" marginLeft={"2vh"} variant="outline" ><FaTrash /></Button></Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>

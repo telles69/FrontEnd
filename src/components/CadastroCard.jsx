@@ -8,6 +8,7 @@ import { CheckboxCard } from "@/components/ui/checkbox-card"
 import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
 import axios from '../utils/axios';
 import { useState } from "react"
+import { Checkbox } from "@/components/ui/checkbox"
 
 export default function Cadastro() {
 
@@ -85,7 +86,7 @@ export default function Cadastro() {
                                 </NativeSelectRoot>
                             </Field>
                             <Field label="Ocupação">
-                                <CheckboxCard onChange={(a) => setOcupacao(a.target.value)} label="Estudante"/>
+                                <CheckboxCard onChange={(a) => setOcupacao(!!a.target.value)} label="Estudante"/>
                             </Field>
                         </Field>
                         <Button
