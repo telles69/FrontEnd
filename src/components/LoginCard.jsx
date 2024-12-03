@@ -18,7 +18,6 @@ export default function Login() {
     const [CPF, setCPF] = useState('')
     const [cargo, setCargo] = useState('')
     const [ocupacao, setOcupacao] = useState(false)
-    
     const handleClick = async () => {
         try {
           

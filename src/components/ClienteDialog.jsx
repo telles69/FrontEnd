@@ -13,16 +13,18 @@ import { RiPencilFill } from "react-icons/ri";
 import { DialogBody, DialogCloseTrigger, DialogContent, DialogFooter, DialogHeader, DialogRoot, DialogTitle, DialogTrigger, DialogActionTrigger } from "@/components/ui/dialog"
 
 export default function Dialog({data = []}) {
+    const [id, setId] = useState('')
     const [nome, setNome] = useState('')
     const [senha, setSenha] = useState('')
     const [email, setEmail] = useState('')
     const [CPF, setCPF] = useState('')
     const [cargo, setCargo] = useState('')
-    const [ocupacao, setOcupacao] = useState('')
+    const [ocupacao, setOcupacao] = useState(false)
 
-    const DoIt = async (id) => {
+    const DoIt = async (id1) => {
         try {
-            const Usuario = await axios.post(`/usuario/${id}`, {
+            const Usuario = await axios.post(`/usuario/${id1}`, {
+                id: id,
                 nome: nome,
                 senha: senha,
                 email: email,
@@ -33,7 +35,7 @@ export default function Dialog({data = []}) {
         } catch (error) {
             console.log(error.message);
         }
-    }
+    }   
 
     return (
         <DialogRoot>
@@ -78,7 +80,7 @@ export default function Dialog({data = []}) {
                     <DialogActionTrigger asChild>
                         <Button variant="outline">Cancel</Button>
                     </DialogActionTrigger>
-                    <Button onClick={() => DoIt(data.id)}>Save {data.id}</Button>
+                    <Button onClick={() => DoIt(data) && setId(data)}>Save</Button>
                 </DialogFooter>
                 <DialogCloseTrigger />
             </DialogContent>

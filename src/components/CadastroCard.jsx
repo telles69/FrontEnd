@@ -30,6 +30,9 @@ export default function Cadastro() {
              idCargo: cargo,
              ocupacao: ocupacao
           })
+          if(handleClick){
+            location.reload()
+          }
         } catch (error) {
           console.log(error.message);
           

@@ -18,14 +18,6 @@ export default function Clientes() {
     const [allData, SetAllData] = useState([])
     const [error, SetError] = useState('')
 
-    function mandar (a) {
-        let novoId = a
-        return novoId
-    }
-    function tchau (a) {
-        let tchau = console.log(a)
-        return tchau
-    }
 
     const handleclick = async () => {
         try {
@@ -40,6 +32,18 @@ export default function Clientes() {
             }
         } catch (error) {
             return res.status(500).send({ message: "Erro otario" })
+        }
+    }
+
+    const deleta = async (id) => {
+        try {
+            const response = await axios.delete(`/usuario/${id}`)
+            response;
+            if(response){
+                location.reload()
+            }
+        } catch (error) {
+            
         }
     }
 
@@ -85,7 +89,7 @@ export default function Clientes() {
                                 {a.estudante && <Table.Cell>Sim</Table.Cell>}
                                 {!a.estudante && <Table.Cell>Não</Table.Cell>}
                                 <Table.Cell>{a.descricao}</Table.Cell>
-                                <Table.Cell textAlign="end"><Dialog data={mandar(a.id)}></Dialog><Button size="sm" marginLeft={"2vh"} variant="outline" ><FaTrash /></Button></Table.Cell>
+                                <Table.Cell textAlign="end"><Dialog data={a.id}></Dialog><Button size="sm" marginLeft={"2vh"} variant="outline" onClick={ () => deleta(a.id)}><FaTrash /></Button></Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>
