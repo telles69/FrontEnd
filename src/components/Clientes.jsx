@@ -11,6 +11,7 @@ import { useState, useEffect } from "react"
 import React from 'react';
 import { RiPencilFill } from "react-icons/ri";
 import Dialog from "./ClienteDialog"
+import Dialog2 from "./ClienteDialog2"
 import { FaTrash } from "react-icons/fa";
 
 export default function Clientes() {
@@ -22,10 +23,7 @@ export default function Clientes() {
     const handleclick = async () => {
         try {
             const response = await axios.get('/usuario/get-junta')
-            console.log("response1")
-            console.log(response)
             if (response && Array.isArray(response)) {
-                console.log("response2")
                 SetAllData(response);
             } else {
                 SetError("No valid data found or response format is incorrect");
@@ -40,7 +38,7 @@ export default function Clientes() {
             const response = await axios.delete(`/usuario/${id}`)
             response;
             if(response){
-                location.reload()
+                SetAllData(allData.filter(a => a.id !== id));
             }
         } catch (error) {
             
@@ -63,15 +61,20 @@ export default function Clientes() {
                 backdropFilter="blur(10px)"
                 border="1px solid rgba(255, 255, 255, 0.3)"
             >
-                <Box textAlign="center" mb="6">
-                    <Image src="https://gainblers.com/imagenes/casas/pokerstarssports/pokerstars-logo.png" alt="LOGO" />
-                    <Box as="h2" fontSize="2xl" fontWeight="bold">
-                        Seleção
+                <Box textAlign="center" mb="1">
+                    {/* <Image src="https://gainblers.com/imagenes/casas/pokerstarssports/pokerstars-logo.png" alt="LOGO" /> */}
+                    <Box as="h2" fontSize="400%" fontWeight="bold">
+                        Usuários Cadastrados
                     </Box>
                 </Box>
+                
+                <Box textAlign="right" mb="3">
+                <Dialog2></Dialog2>
+                </Box>
+                
                 <Table.Root size="lg">
                     <Table.Header>
-                        <Table.Row>
+                        <Table.Row backgroundColor= "rgba(255, 255, 255, 0.2)">
                             <Table.ColumnHeader borderRadius="10px 0px 0px 0px">Nome</Table.ColumnHeader>
                             <Table.ColumnHeader>Email</Table.ColumnHeader>
                             <Table.ColumnHeader>CPF</Table.ColumnHeader>
@@ -82,14 +85,14 @@ export default function Clientes() {
                     </Table.Header>
                     <Table.Body>
                         {allData.map((a) => (
-                            <Table.Row key={a.id}>
+                            <Table.Row key={a.id} backgroundColor= "rgba(255, 255, 255, 0.2)">
                                 <Table.Cell>{a.nome}</Table.Cell>
                                 <Table.Cell>{a.email}</Table.Cell>
                                 <Table.Cell>{a.cpf}</Table.Cell>
                                 {a.estudante && <Table.Cell>Sim</Table.Cell>}
                                 {!a.estudante && <Table.Cell>Não</Table.Cell>}
                                 <Table.Cell>{a.descricao}</Table.Cell>
-                                <Table.Cell textAlign="end"><Dialog data={a.id}></Dialog><Button size="sm" marginLeft={"2vh"} variant="outline" onClick={ () => deleta(a.id)}><FaTrash /></Button></Table.Cell>
+                                <Table.Cell textAlign="end"><Dialog data={a}></Dialog><Button size="sm" marginLeft={"2vh"} variant="outline" onClick={ () => deleta(a.id)}><FaTrash /></Button></Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>

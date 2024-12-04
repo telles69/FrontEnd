@@ -19,6 +19,25 @@ export default function Cadastro() {
     const [cargo, setCargo] = useState('')
     const [ocupacao, setOcupacao] = useState(false)
     
+    const [allCargos, SetAllCargos] = useState([])
+    const [error, SetError] = useState('')
+
+
+    const look = async () => {
+        try {
+            const response = await axios.get('/cargo')
+            console.log(response)
+            if (response.data && Array.isArray(response.data)) {
+                SetAllCargos(response.data);
+                console.log("responde cargo");
+            } else {
+                SetError("No valid data found or response format is incorrect");
+            }
+        } catch (error) {
+            return res.status(500).send({ message: "Erro otario" })
+        }
+    }
+
     const handleClick = async () => {
         try {
           
@@ -28,7 +47,7 @@ export default function Cadastro() {
              email: email, 
              cpf: CPF,
              idCargo: cargo,
-             ocupacao: ocupacao
+             estudante: ocupacao
           })
           if(handleClick){
             location.reload()
@@ -83,13 +102,16 @@ export default function Cadastro() {
                             </Field>
                             <Field label="Cargo">
                                 <NativeSelectRoot variant="subtle" size="lg" width="240px">
-                                    <NativeSelectField  onChange={(e) => setCargo(e.currentTarget.value)} placeholder="Selecione uma opcao">
-                                        <option value="1">Cliente</option>
+                                    <NativeSelectField  onChange={(e) => setCargo(e.currentTarget.value)} placeholder="Selecione uma opcao" onClick={look}>
+                                    {allCargos.map((a) => (
+                                        <option value={a.id}>{a.descricao}</option>
+                                    ))}
                                     </NativeSelectField>
                                 </NativeSelectRoot>
                             </Field>
                             <Field label="Ocupação">
-                                <CheckboxCard onChange={(a) => setOcupacao(!!a.target.value)} label="Estudante"/>
+                                {/* <CheckboxCard onChange={(a) => setOcupacao(!!a.target.value)} label="Estudante"/> */}
+                                <CheckboxCard ocupacao={ocupacao} onCheckedChange={(e) => setOcupacao(!!e.checked)} label="Estudante" />
                             </Field>
                         </Field>
                         <Button
