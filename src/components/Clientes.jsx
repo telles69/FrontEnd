@@ -2,8 +2,6 @@ import { Button, Card, Input, Stack, Flex, Center, Box, Image, Icon, Text, HStac
 import { Field } from "@/components/ui/field"
 import { PasswordInput, PasswordStrengthMeter } from "@/components/ui/password-input"
 import { useRouter } from 'next/router'
-import { FaGoogle } from "react-icons/fa6"
-import { SiApple } from "react-icons/si"
 import { CheckboxCard } from "@/components/ui/checkbox-card"
 import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
 import axios from '../utils/axios';
@@ -14,36 +12,10 @@ import Dialog from "./ClienteDialog"
 import Dialog2 from "./ClienteDialog2"
 import { FaTrash } from "react-icons/fa";
 
-export default function Clientes() {
+export default function Clientes({ data=[], handleclick, deleta }) {
 
     const [allData, SetAllData] = useState([])
     const [error, SetError] = useState('')
-
-
-    const handleclick = async () => {
-        try {
-            const response = await axios.get('/usuario/get-junta')
-            if (response && Array.isArray(response)) {
-                SetAllData(response);
-            } else {
-                SetError("No valid data found or response format is incorrect");
-            }
-        } catch (error) {
-            return res.status(500).send({ message: "Erro otario" })
-        }
-    }
-
-    const deleta = async (id) => {
-        try {
-            const response = await axios.delete(`/usuario/${id}`)
-            response;
-            if(response){
-                SetAllData(allData.filter(a => a.id !== id));
-            }
-        } catch (error) {
-            
-        }
-    }
 
     useEffect(() => {
         handleclick();
@@ -84,7 +56,7 @@ export default function Clientes() {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {allData.map((a) => (
+                        {data.map((a) => (
                             <Table.Row key={a.id} backgroundColor= "rgba(255, 255, 255, 0.2)">
                                 <Table.Cell>{a.nome}</Table.Cell>
                                 <Table.Cell>{a.email}</Table.Cell>
@@ -101,4 +73,3 @@ export default function Clientes() {
         </Center>
     );
 }
-
