@@ -12,6 +12,7 @@ const Demo = () => {
 
     const [error, SetError] = useState('')
     const [allData, SetAllData] = useState([])
+    const [allCargos, SetAllCargos] = useState([])
 
     const handleclick = async () => {
         try {
@@ -36,10 +37,55 @@ const Demo = () => {
         }
     }
 
+//Dialog
+
+const look = async () => {
+    try {
+        const response = await axios.get('/cargo')
+        if (response.data && Array.isArray(response.data)) {
+            SetAllCargos(response.data);
+            console.log("responde cargo");
+        } 
+    } catch (error) {
+        SetError("Otario look")
+    }
+}
+
+const DoIt = async (id1, data=[]) => {
+    try {
+        const Usuario = await axios.post(`/usuario/${id1}`, {
+           ...data
+        })
+        if(DoIt){
+            location.reload()
+          }
+    } catch (error) {
+        SetError("Otario DoIt")
+    }
+}   
+    if(error){
+        return <Box>{error}</Box>        
+    }
+
+    //Dialog Create
+
+    const DoItCreate = async (data={}) => {
+        try {
+            const Usuario = await axios.post(`/usuario`, {
+                ...data
+            })
+            if(DoIt){
+                location.reload()
+              }
+        } catch (error) {
+            SetError("Otario DoItCreate")
+        }
+    }  
+
     return (
         <Box>
             <Background></Background>
-            <Clientes data={allData} handleclick={handleclick} deleta={deleta}/>
+            <Clientes data={allData} handleclick={handleclick} deleta={deleta} look={look} DoIt={DoIt} allCargos={allCargos} DoItCreate={DoItCreate}/>
         </Box>
     );
 };

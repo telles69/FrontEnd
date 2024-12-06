@@ -18,29 +18,22 @@ const Demo = () => {
             const response = await axios.get('/cargo')
             if (response.data && Array.isArray(response.data)) {
                 SetAllCargos(response.data);
-            } else {
-                SetError("No valid data found or response format is incorrect");
-            }
+            } 
         } catch (error) {
-            return res.status(500).send({ message: "Erro otario" })
+            SetError("Otario");
         }
     }
 
-    const handleClick = async () => {
+    const handleClick = async (data = {}) => {
         try {
            const Usuario = await axios.post('/usuario', { 
-             nome: nome,
-             senha: senha,
-             email: email, 
-             cpf: CPF,
-             idCargo: cargo,
-             estudante: ocupacao
+             ...data
           })
           if(handleClick){
             location.reload()
           }
         } catch (error) {
-          console.log(error.message);
+            SetError("Otario Handleclick");
           
         }
     }
@@ -48,7 +41,6 @@ const Demo = () => {
     return (
         <Box>
             <Background></Background>
-
             <Cadastro allData={allData} look={look} handleClick={handleClick} allCargos={allCargos}/>
         </Box>
     );

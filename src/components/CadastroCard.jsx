@@ -15,53 +15,17 @@ export default function Cadastro({allData=[], look, handleClick, allCargos=[]}) 
     const [nome, setNome] = useState('')
     const [senha, setSenha] = useState('')
     const [email, setEmail] = useState('')
-    const [CPF, setCPF] = useState('')
-    const [cargo, setCargo] = useState('')
+    const [cpf, setCPF] = useState('')
+    const [idCargo, setCargo] = useState('')
     const [ocupacao, setOcupacao] = useState(false)
     const [error, SetError] = useState('')
+    const envio = {nome, email, cpf, senha, idCargo, ocupacao}
 
-    // const look2 = () => {
-    //     look;
-    // }
-    
-    // const look = async () => {
-    //     try {
-    //         const response = await axios.get('/cargo')
-    //         console.log(response)
-    //         if (response.data && Array.isArray(response.data)) {
-    //             SetAllCargos(response.data);
-    //             console.log("responde cargo");
-    //         } else {
-    //             SetError("No valid data found or response format is incorrect");
-    //         }
-    //     } catch (error) {
-    //         return res.status(500).send({ message: "Erro otario" })
-    //     }
-    // }
-
-    // const handleClick = async () => {
-    //     try {
-          
-    //        const Usuario = await axios.post('/usuario', { 
-    //          nome: nome,
-    //          senha: senha,
-    //          email: email, 
-    //          cpf: CPF,
-    //          idCargo: cargo,
-    //          estudante: ocupacao
-    //       })
-    //       if(handleClick){
-    //         location.reload()
-    //       }
-    //     } catch (error) {
-    //       console.log(error.message);
-          
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     look;
-    // }, []);
+    const envio2 = async () => {
+        if(envio){
+            handleClick(envio)
+        }
+    }
 
     const router = useRouter()
     const goCreate = () => {
@@ -154,7 +118,7 @@ export default function Cadastro({allData=[], look, handleClick, allCargos=[]}) 
                         <Button variant="outline" colorScheme="whiteAlpha" mr="2" onClick={goLogin}>
                             Faça Login
                         </Button>
-                        <Button variant="solid" colorScheme="teal" onClick={handleClick}>
+                        <Button variant="solid" colorScheme="teal" onClick={envio2}>
                             Criar
                         </Button>
                     </Flex>

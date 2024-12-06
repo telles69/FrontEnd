@@ -12,50 +12,21 @@ import React from 'react';
 import { RiPencilFill } from "react-icons/ri";
 import { DialogBody, DialogCloseTrigger, DialogContent, DialogFooter, DialogHeader, DialogRoot, DialogTitle, DialogTrigger, DialogActionTrigger } from "@/components/ui/dialog"
 
-export default function Dialog2() {
+export default function Dialog2({DoItCreate, look, allCargos=[]}) {
     const [nome, setNome] = useState('')
     const [senha, setSenha] = useState('')
     const [email, setEmail] = useState('')
-    const [CPF, setCPF] = useState('')
-    const [cargo, setCargo] = useState('')
+    const [cpf, setCPF] = useState('')
+    const [idCargo, setCargo] = useState('')
     const [ocupacao, setOcupacao] = useState(false)
-    const [allCargos, SetAllCargos] = useState([])
     const [error, SetError] = useState('')
+    const envio = {nome, email, cpf, senha, idCargo, ocupacao}
 
-
-    const look = async () => {
-        try {
-            const response = await axios.get('/cargo')
-            console.log(response)
-            if (response.data && Array.isArray(response.data)) {
-                SetAllCargos(response.data);
-                console.log("responde cargo");
-            } else {
-                SetError("No valid data found or response format is incorrect");
-            }
-        } catch (error) {
-            return res.status(500).send({ message: "Erro otario" })
+    const envio2 = async () => {
+        if(envio){
+            DoItCreate(envio)
         }
     }
-
-    const DoIt = async () => {
-        try {
-            const Usuario = await axios.post(`/usuario`, {
-                nome: nome,
-                senha: senha,
-                email: email,
-                cpf: CPF,
-                idCargo: cargo,
-                estudante: ocupacao
-            })
-            if(DoIt){
-                location.reload()
-              }
-        } catch (error) {
-            console.log(error.message);
-        }
-    }  
-
 
     return (
         <DialogRoot>
@@ -102,7 +73,7 @@ export default function Dialog2() {
                     <DialogActionTrigger asChild>
                         <Button variant="outline">Cancel</Button>
                     </DialogActionTrigger>
-                    <Button onClick={DoIt}>Save</Button>
+                    <Button onClick={()=> envio2()}>Save</Button>
                 </DialogFooter>
                 <DialogCloseTrigger />
             </DialogContent>

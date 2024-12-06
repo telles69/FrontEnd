@@ -1,9 +1,6 @@
 import { Button, Card, Input, Stack, Flex, Center, Box, Image, Icon, Text, HStack, Link, Table } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
-import { PasswordInput, PasswordStrengthMeter } from "@/components/ui/password-input"
-import { useRouter } from 'next/router'
-import { FaGoogle } from "react-icons/fa6"
-import { SiApple } from "react-icons/si"
+import { PasswordInput, PasswordStrengthMeter } from "@/components/ui/password-input"   
 import { CheckboxCard } from "@/components/ui/checkbox-card"
 import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
 import axios from '../utils/axios';
@@ -12,51 +9,30 @@ import React from 'react';
 import { RiPencilFill } from "react-icons/ri";
 import { DialogBody, DialogCloseTrigger, DialogContent, DialogFooter, DialogHeader, DialogRoot, DialogTitle, DialogTrigger, DialogActionTrigger } from "@/components/ui/dialog"
 
-export default function Dialog({data = []}) {
+export default function Dialog({data = [], look, DoIt, allCargos=[]}) {
     const [id, setId] = useState('')
     const [nome, setNome] = useState(data.nome)
     const [senha, setSenha] = useState(data.senha)
     const [email, setEmail] = useState(data.email)
-    const [CPF, setCPF] = useState(data.cpf)
-    const [cargo, setCargo] = useState('')
+    const [cpf, setCPF] = useState(data.cpf)
+    const [idCargo, setCargo] = useState('')
     const [ocupacao, setOcupacao] = useState(false)
-    const [allCargos, SetAllCargos] = useState([])
     const [error, SetError] = useState('')
+    const envioEditar = {id, nome, email, cpf, senha, idCargo, ocupacao}
 
-
-    const look = async () => {
-        try {
-            const response = await axios.get('/cargo')
-            if (response.data && Array.isArray(response.data)) {
-                SetAllCargos(response.data);
-                console.log("responde cargo");
-            } else {
-                SetError("No valid data found or response format is incorrect");
-            }
-        } catch (error) {
-            return res.status(500).send({ message: "Erro otario" })
+    const envio3 = async () => {
+        setId(data.id)
+        if(id){
+            envio2()
         }
     }
 
-    const DoIt = async (id1) => {
-        try {
-            const Usuario = await axios.post(`/usuario/${id1}`, {
-                id: id,
-                nome: nome,
-                senha: senha,
-                email: email,
-                cpf: CPF,
-                idCargo: cargo,
-                estudante: ocupacao
-            })
-            if(DoIt){
-                location.reload()
-              }
-        } catch (error) {
-            console.log(error.message);
+    const envio2 = async () => {
+        if(envioEditar){
+            DoIt(id, envioEditar)
         }
-    }   
-
+    }
+   
     return (
         <DialogRoot>
             <DialogTrigger asChild>
@@ -78,7 +54,7 @@ export default function Dialog({data = []}) {
                                 <Input value={email} onChange={(a) => setEmail(a.target.value)} placeholder="Digite seu Email" _placeholder={{ color: "gray.800" }} />
                             </Field>
                             <Field label="CPF" required>
-                                <Input value={CPF}  onChange={(a) => setCPF(a.target.value)} placeholder="Digite seu CPF" _placeholder={{ color: "gray.800" }} />
+                                <Input value={cpf}  onChange={(a) => setCPF(a.target.value)} placeholder="Digite seu CPF" _placeholder={{ color: "gray.800" }} />
                             </Field>
                             <Field label="Senha" required>
                                 <PasswordInput value={senha}  onChange={(a) => setSenha(a.target.value)} placeholder="Digite sua senha" _placeholder={{ color: "gray.800" }} />
@@ -102,7 +78,7 @@ export default function Dialog({data = []}) {
                     <DialogActionTrigger asChild>
                         <Button variant="outline">Cancel</Button>
                     </DialogActionTrigger>
-                    <Button onClick={() => DoIt(data.id) && setId(data.id)}>Save</Button>
+                    <Button onClick={() => envio3()}>Save</Button>
                 </DialogFooter>
                 <DialogCloseTrigger />
             </DialogContent>
