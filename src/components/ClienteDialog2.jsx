@@ -18,9 +18,9 @@ export default function Dialog2({DoItCreate, look, allCargos=[]}) {
     const [email, setEmail] = useState('')
     const [cpf, setCPF] = useState('')
     const [idCargo, setCargo] = useState('')
-    const [ocupacao, setOcupacao] = useState(false)
+    const [estudante, setEstudante] = useState(false)
     const [error, SetError] = useState('')
-    const envio = {nome, email, cpf, senha, idCargo, ocupacao}
+    const envio = {nome, email, cpf, senha, idCargo, estudante}
 
     const envio2 = async () => {
         if(envio){
@@ -64,7 +64,7 @@ export default function Dialog2({DoItCreate, look, allCargos=[]}) {
                                 </NativeSelectRoot>
                             </Field>
                             <Field label="Ocupação">
-                            <CheckboxCard ocupacao={ocupacao} onCheckedChange={(e) => setOcupacao(!!e.checked)} label="Estudante" />
+                            <CheckboxCard estudante={estudante} onCheckedChange={(e) => setEstudante(!!e.checked)} label="Estudante" />
                             </Field>
                         </Field>
                     </Stack>

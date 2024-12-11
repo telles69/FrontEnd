@@ -17,6 +17,8 @@ const Demo = () => {
     const handleclick = async () => {
         try {
             const response = await axios.get('/usuario/get-junta')
+            console.log("Isso é um response do client")
+            console.log(response)
             if (response && Array.isArray(response)) {
                 SetAllData(response);
             }

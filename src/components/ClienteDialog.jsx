@@ -16,9 +16,9 @@ export default function Dialog({data = [], look, DoIt, allCargos=[]}) {
     const [email, setEmail] = useState(data.email)
     const [cpf, setCPF] = useState(data.cpf)
     const [idCargo, setCargo] = useState('')
-    const [ocupacao, setOcupacao] = useState(false)
+    const [estudante, setEstudante] = useState(false)
     const [error, SetError] = useState('')
-    const envioEditar = {id, nome, email, cpf, senha, idCargo, ocupacao}
+    const envioEditar = {id, nome, email, cpf, senha, idCargo, estudante}
 
     const envio3 = async () => {
         setId(data.id)
@@ -69,7 +69,7 @@ export default function Dialog({data = [], look, DoIt, allCargos=[]}) {
                                 </NativeSelectRoot>
                             </Field>
                             <Field label="Ocupação">
-                            <CheckboxCard ocupacao={ocupacao} onCheckedChange={(e) => setOcupacao(!!e.checked)} label="Estudante" />
+                            <CheckboxCard estudante={estudante} onCheckedChange={(e) => setEstudante(!!e.checked)} label="Estudante" />
                             </Field>
                         </Field>
                     </Stack>

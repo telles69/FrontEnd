@@ -10,40 +10,19 @@ import axios from '../utils/axios';
 import { useState } from "react"
 
 
-export default function Login() {
+export default function Login({DoLogin}) {
 
-    const [nome, setNome] = useState('')
     const [senha, setSenha] = useState('')
     const [email, setEmail] = useState('')
-    const [CPF, setCPF] = useState('')
-    const [cargo, setCargo] = useState('')
-    const [ocupacao, setOcupacao] = useState(false)
-    const handleClick = async () => {
-        try {
-          
-           const Usuario = await axios.post('/user/login', { //mudar
-             nome: nome,
-             senha: senha,
-             email: email, 
-             CPF: CPF,
-             cargo: cargo,
-             ocupacao: ocupacao
-          })
-          localStorage.setItem('token', Usuario.token)
-          setData(Usuario.username)
-          alert('Seu usuario e: ${data}')
-        } catch (error) {
-          console.log(error.message);
-          
-        }
-    }
+
+    const enviar = async () => {
+        if(email && senha){
+            DoLogin(email, senha)
+    }}
 
     const router = useRouter()
     const goCreate = () => {
         router.push('/administrador/cadastro')
-    }
-    const goLogin = () => {
-        router.push('/administrador/login')
     }
         return (
             <Center minHeight="100vh">
@@ -60,20 +39,22 @@ export default function Login() {
                     <Box textAlign="center" mb="6">
                         <Image src="https://gainblers.com/imagenes/casas/pokerstarssports/pokerstars-logo.png" alt="LOGO" />
                         <Box as="h2" fontSize="2xl" fontWeight="bold">
-                            Login
+                            Login Administrador 
                         </Box>
                     </Box>
                     <Stack gap="4">
 
                         <Field >
-                            <Field label="CPF">
-                                <Input placeholder="Digite seu CPF" _placeholder={{ color: "gray.800" }} />
+                            <Field label="Email">
+                                <Input onChange={(a) => setEmail(a.target.value)} placeholder="Digite seu Email" _placeholder={{ color: "gray.800" }} />
                             </Field>
                             <Field label="Senha">
-                                <PasswordInput placeholder="Digite sua senha" _placeholder={{ color: "gray.800" }} />
+                                <PasswordInput onChange={(a) => setSenha(a.target.value)} placeholder="Digite sua senha" _placeholder={{ color: "gray.800" }} />
                             </Field>
                         </Field>
-
+                        <Box textAlign="center">
+                        <Link href="/administrador/esqueci">Esqueci minha senha</Link>
+                        </Box>
                         <Button
                             borderRadius={20}
                             bgColor="white"
@@ -109,7 +90,7 @@ export default function Login() {
                         <Button variant="outline" colorScheme="whiteAlpha" mr="2"    >
                             Criar conta
                         </Button>
-                        <Button variant="solid" colorScheme="teal">
+                        <Button variant="solid" colorScheme="teal" onClick={enviar}>
                             Entre
                         </Button>
                     </Flex>

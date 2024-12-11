@@ -17,9 +17,9 @@ export default function Cadastro({allData=[], look, handleClick, allCargos=[]}) 
     const [email, setEmail] = useState('')
     const [cpf, setCPF] = useState('')
     const [idCargo, setCargo] = useState('')
-    const [ocupacao, setOcupacao] = useState(false)
+    const [estudante, setEstudante] = useState(false)
     const [error, SetError] = useState('')
-    const envio = {nome, email, cpf, senha, idCargo, ocupacao}
+    const envio = {nome, email, cpf, senha, idCargo, estudante}
 
     const envio2 = async () => {
         if(envio){
@@ -80,7 +80,7 @@ export default function Cadastro({allData=[], look, handleClick, allCargos=[]}) 
                             </Field>
                             <Field label="Ocupação">
                                 {/* <CheckboxCard onChange={(a) => setOcupacao(!!a.target.value)} label="Estudante"/> */}
-                                <CheckboxCard ocupacao={ocupacao} onCheckedChange={(e) => setOcupacao(!!e.checked)} label="Estudante" />
+                                <CheckboxCard estudante={estudante} onCheckedChange={(e) => setEstudante(!!e.checked)} label="Estudante" />
                             </Field>
                         </Field>
                         <Button
