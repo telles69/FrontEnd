@@ -87,7 +87,7 @@ export default function Login({DoLogin}) {
                         </HStack>
                     </Stack>
                     <Flex justifyContent="center" mt="6">
-                        <Button variant="outline" colorScheme="whiteAlpha" mr="2"    >
+                        <Button variant="outline" colorScheme="whiteAlpha" mr="2" onClick={goCreate}>
                             Criar conta
                         </Button>
                         <Button variant="solid" colorScheme="teal" onClick={enviar}>

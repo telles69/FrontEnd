@@ -11,12 +11,17 @@ import { RiPencilFill } from "react-icons/ri";
 import Dialog from "./ClienteDialog"
 import Dialog2 from "./ClienteDialog2"
 import { FaTrash } from "react-icons/fa";
-
+import Pagination from "./Pagination"
 
 export default function Clientes({ data=[], handleclick, deleta, look, DoIt, allCargos=[], DoItCreate }) {
 
     const [allData, SetAllData] = useState([])
     const [error, SetError] = useState('')
+    const [page, setPage] = useState(1)
+    
+    const pageSize = 10;
+
+    const visibleItems = data.slice((page - 1) * pageSize, page * pageSize);
 
     useEffect(() => {
         handleclick();
@@ -35,7 +40,6 @@ export default function Clientes({ data=[], handleclick, deleta, look, DoIt, all
                 border="1px solid rgba(255, 255, 255, 0.3)"
             >
                 <Box textAlign="center" mb="1">
-                    {/* <Image src="https://gainblers.com/imagenes/casas/pokerstarssports/pokerstars-logo.png" alt="LOGO" /> */}
                     <Box as="h2" fontSize="400%" fontWeight="bold">
                         Usuários Cadastrados
                     </Box>
@@ -44,7 +48,7 @@ export default function Clientes({ data=[], handleclick, deleta, look, DoIt, all
                 <Box textAlign="right" mb="3">
                 <Dialog2 DoItCreate={DoItCreate} look={look} allCargos={allCargos}></Dialog2>
                 </Box>
-                
+                <Box mb="3">
                 <Table.Root size="lg">
                     <Table.Header>
                         <Table.Row backgroundColor= "rgba(255, 255, 255, 0.2)">
@@ -58,8 +62,8 @@ export default function Clientes({ data=[], handleclick, deleta, look, DoIt, all
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {data.map((a) => (
-                            <Table.Row key={a.id} backgroundColor= "rgba(255, 255, 255, 0.2)">
+                        {visibleItems.map((a) => (
+                            <Table.Row key={a.id} backgroundColor= "rgba(255, 255, 255, 0.2)"s>
                                 <Table.Cell>{a.id}</Table.Cell>
                                 <Table.Cell>{a.nome}</Table.Cell>
                                 <Table.Cell>{a.email}</Table.Cell>
@@ -72,6 +76,8 @@ export default function Clientes({ data=[], handleclick, deleta, look, DoIt, all
                         ))}
                     </Table.Body>
                 </Table.Root>
+                </Box>
+                <Pagination datalength={data.length} pageSize={pageSize} page={page} setPage={setPage}></Pagination>
             </Box>
         </Center>
     );

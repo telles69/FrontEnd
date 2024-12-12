@@ -11,39 +11,43 @@ import { useState, useEffect } from "react"
 import React from 'react';
 import { RiPencilFill } from "react-icons/ri";
 
-export default function Forgot({forgot1, allData={}, flag}) {
+export default function Forgot({forgot1, allData={}, flag, forgot2, forgot3}) {
 
     const [passo , setPasso] = useState(1)
     const [email, setEmail] = useState('')
     const [codigo, setCodigo] = useState('')
     const [senha, setSenha] = useState('')
+    const dois1 = {email, codigo}
+    const dois2 = {senha, email}
 
-    const before = () =>{
-        forgot1(email)
-        before2()
+    const router = useRouter()
+    const goLogin = () => {
+        router.push('/administrador/login')
     }
 
-    const before2 = () =>{
-        forgot1(email)
-        passo1()
-    }
-    
     const passo1 = () => {
-        // console.log("controller1")
-        // console.log(flag)
-        // forgot1(email)
-        // console.log("controller2")
-        // console.log(flag)
+        forgot1(email)
         if(flag === true){
-             console.log(flag)
             setPasso(2)
         }else{
             console.log('Email troxa')
-            console.log(allData)
         }
     }
     const passo2 = () => {
+        forgot2(dois1)
+        if(flag === true){
         setPasso(3)
+        }else{
+            console.log('Codigo troxa')
+        }
+    }
+    const passo3 = () =>{
+        forgot3(dois2)
+        if(flag === true){
+        goLogin()
+        }else{
+            console.log('Senha nova troxa')
+        }
     }
 return(
     <Center minHeight="100vh">
@@ -71,7 +75,7 @@ return(
                         </Field>
                     </Field>
                     <Flex justifyContent="right" mt="6">
-                    <Button variant="solid" colorScheme="teal" onClick={before}>
+                    <Button variant="solid" colorScheme="teal" onClick={passo1}>
                             Proximo 
                         </Button>
                         </Flex>
@@ -97,7 +101,7 @@ return(
                         </Field>
                     </Field>
                     <Flex justifyContent="right" mt="6">
-                    <Button variant="solid" colorScheme="teal">
+                    <Button variant="solid" colorScheme="teal" onClick={passo3}>
                             Confirmar 
                         </Button>
                         </Flex>
