@@ -23,10 +23,34 @@ export default function Clientes({ data=[], handleclick, deleta, look, DoIt, all
 
     const visibleItems = data.slice((page - 1) * pageSize, page * pageSize);
 
+    const logout = async () => {
+        localStorage.removeItem('token')
+        goLogin()
+    }
+
+    const verifyAdmin = async () => { //arrumar
+        const token = localStorage.getItem('token');
+        if (!token) {
+          router.push('/administrador/login');
+        }
+    }
+  
+    const verifyToken = async () => {
+        const token = localStorage.getItem('token');
+        console.log("Isso é um token")
+        console.log(token)
+    }
+
     useEffect(() => {
-        handleclick();
+       verifyAdmin();
+       verifyToken();
+       handleclick();
     }, []);
 
+    const router = useRouter()
+    const goLogin = () => {
+        router.push('/administrador/login')
+    }
     return (
         <Center minHei ght="100vh">
             <Box
@@ -40,37 +64,38 @@ export default function Clientes({ data=[], handleclick, deleta, look, DoIt, all
                 border="1px solid rgba(255, 255, 255, 0.3)"
             >
                 <Box textAlign="center" mb="1">
-                    <Box as="h2" fontSize="400%" fontWeight="bold">
+                    <Box as="h2" fontSize="400%" fontWeight="bold" >
                         Usuários Cadastrados
                     </Box>
                 </Box>
                 
-                <Box textAlign="right" mb="3">
+                <Box textAlign="right" mb="3" >
+                <Button colorPalette="red" size="sm" marginRight={"2vh"} variant="outline" onClick={ () => logout()}>Logout</Button>
                 <Dialog2 DoItCreate={DoItCreate} look={look} allCargos={allCargos}></Dialog2>
                 </Box>
                 <Box mb="3">
                 <Table.Root size="lg">
                     <Table.Header>
                         <Table.Row backgroundColor= "rgba(255, 255, 255, 0.2)">
-                            <Table.ColumnHeader borderRadius="10px 0px 0px 0px">Id</Table.ColumnHeader>
-                            <Table.ColumnHeader>Nome</Table.ColumnHeader>
-                            <Table.ColumnHeader>Email</Table.ColumnHeader>
+                            <Table.ColumnHeader borderRadius="10px 0px 0px 0px" >Id</Table.ColumnHeader>
+                            <Table.ColumnHeader >Nome</Table.ColumnHeader>
+                            <Table.ColumnHeader >Email</Table.ColumnHeader>
                             <Table.ColumnHeader>CPF</Table.ColumnHeader>
                             <Table.ColumnHeader>Estudante</Table.ColumnHeader>
                             <Table.ColumnHeader>Cargo</Table.ColumnHeader>
-                            <Table.ColumnHeader textAlign="end"  borderRadius="0px 10px 0px 0px">Editar</Table.ColumnHeader>
+                            <Table.ColumnHeader textAlign="end"  borderRadius="0px 10px 0px 0px" >Editar</Table.ColumnHeader>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
                         {visibleItems.map((a) => (
-                            <Table.Row key={a.id} backgroundColor= "rgba(255, 255, 255, 0.2)"s>
-                                <Table.Cell>{a.id}</Table.Cell>
-                                <Table.Cell>{a.nome}</Table.Cell>
-                                <Table.Cell>{a.email}</Table.Cell>
-                                <Table.Cell>{a.cpf}</Table.Cell>
-                                {a.estudante && <Table.Cell>Sim</Table.Cell>}
-                                {!a.estudante && <Table.Cell>Não</Table.Cell>}
-                                <Table.Cell>{a.descricao}</Table.Cell>
+                            <Table.Row key={a.id} backgroundColor= "rgba(255, 255, 255, 0.2)">
+                                <Table.Cell >{a.id}</Table.Cell>
+                                <Table.Cell >{a.nome}</Table.Cell>
+                                <Table.Cell >{a.email}</Table.Cell>
+                                <Table.Cell >{a.cpf}</Table.Cell>
+                                {a.estudante && <Table.Cell >Sim</Table.Cell>}
+                                {!a.estudante && <Table.Cell >Não</Table.Cell>}
+                                <Table.Cell >{a.descricao}</Table.Cell>
                                 <Table.Cell textAlign="end"><Dialog data={a} look={look} DoIt={DoIt} allCargos={allCargos}></Dialog><Button size="sm" marginLeft={"2vh"} variant="outline" onClick={ () => deleta(a.id)}><FaTrash /></Button></Table.Cell>
                             </Table.Row>
                         ))}

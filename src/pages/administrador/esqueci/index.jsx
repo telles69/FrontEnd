@@ -14,20 +14,17 @@ export default function Demo() {
 
     const[allData, setAllData]=useState({})
     const[error, setError]=useState('')
-    const[flag, setFlag]=useState(false)
+    const[contador, setContador]=useState(1)
 
     const forgot1 = async (email) => {
         try {
+            
             const response = await axios.post(`http://localhost:3333/send`,{
                 email
             })
-            console.log("Isso é um response")
-            console.log(response.data)
-            if (response.data) {
+            if (response.data.type === 'success') {
                 setAllData(response.data);
-                console.log("Isso é um allData")
-                console.log(allData)
-                setFlag(true)
+                setContador(2)
             }else{
                 setError('Email não encontrado 2222')
             }
@@ -41,9 +38,9 @@ export default function Demo() {
             const response = await axios.post(`http://localhost:3333/code`,{
                 ...data
             })
-            if (response.data) {
+            if (response.data.type === 'success') {
                 setAllData(response.data);
-                setFlag(true)
+                setContador(3)
             }else{
                 setError('Email não encontrado 3333')
             }
@@ -56,9 +53,9 @@ export default function Demo() {
             const response = await axios.post(`http://localhost:3333/newPassword`,{
                 ...data
             })
-            if (response.data) {
+            if (response.data.type === 'success') {
                 setAllData(response.data);
-                setFlag(true)
+                setContador(null)
             }else{
                 setError('Email não encontrado 4444')
             }
@@ -69,7 +66,7 @@ export default function Demo() {
     return(
     <Box>
     <Background></Background>
-    <Forgot forgot1={forgot1} allData={allData} flag={flag} forgot2={forgot2} forgot3={forgot3}></Forgot>
+    <Forgot forgot1={forgot1} allData={allData} contador={contador} forgot2={forgot2} forgot3={forgot3}></Forgot>
     </Box>
 )
 }

@@ -1,12 +1,25 @@
 import { Button, Card, Input, Stack, Flex, Center, Box, Image, Icon, Text, HStack, Link, Table } from "@chakra-ui/react"
 import { useRouter } from "next/router"
+import { useState, useEffect } from "react"
 
 export default function Inicial() {
+
+    const verifyAdmin = async () => { 
+        const token = localStorage.getItem('token');
+        if (!token) {
+          router.push('/administrador/login');
+        }
+    }
 
     const router = useRouter()
     const goClientes = () =>{
         router.push('/administrador/clientes')
     }
+
+    useEffect(() => {
+        verifyAdmin();
+     }, []);
+ 
 
     return(
     <Center minHeight="100vh">
@@ -25,8 +38,9 @@ export default function Inicial() {
                 <Box as="h2" fontSize="2xl" fontWeight="bold">
                     Seleção
                 </Box>
+                <Button mb="3" colorPalette="red" size="md" variant="outline" onClick={ () => logout()}>Logout</Button>
                 <Box>
-                <Button variant="solid" colorScheme="teal" onClick={goClientes}>
+                <Button variant="solid" size="md" colorScheme="teal" onClick={goClientes}>
                             Clientes 
                         </Button>
                 </Box>

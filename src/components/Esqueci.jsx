@@ -11,13 +11,13 @@ import { useState, useEffect } from "react"
 import React from 'react';
 import { RiPencilFill } from "react-icons/ri";
 
-export default function Forgot({forgot1, allData={}, flag, forgot2, forgot3}) {
+export default function Forgot({forgot1, allData={}, contador, forgot2, forgot3}) {
 
     const [passo , setPasso] = useState(1)
     const [email, setEmail] = useState('')
-    const [codigo, setCodigo] = useState('')
+    const [code, setCode] = useState('')
     const [senha, setSenha] = useState('')
-    const dois1 = {email, codigo}
+    const dois1 = {email, code}
     const dois2 = {senha, email}
 
     const router = useRouter()
@@ -27,7 +27,7 @@ export default function Forgot({forgot1, allData={}, flag, forgot2, forgot3}) {
 
     const passo1 = () => {
         forgot1(email)
-        if(flag === true){
+        if(contador===2){
             setPasso(2)
         }else{
             console.log('Email troxa')
@@ -35,7 +35,8 @@ export default function Forgot({forgot1, allData={}, flag, forgot2, forgot3}) {
     }
     const passo2 = () => {
         forgot2(dois1)
-        if(flag === true){
+        console.log(contador)
+        if(contador===3){
         setPasso(3)
         }else{
             console.log('Codigo troxa')
@@ -43,7 +44,7 @@ export default function Forgot({forgot1, allData={}, flag, forgot2, forgot3}) {
     }
     const passo3 = () =>{
         forgot3(dois2)
-        if(flag === true){
+        if(contador===null){
         goLogin()
         }else{
             console.log('Senha nova troxa')
@@ -84,7 +85,7 @@ return(
                     <>
                     <Field>
                         <Field label="Código">
-                        <Input onChange={(a) => setCodigo(a.target.value)} placeholder="Digite o Código" _placeholder={{ color: "gray.800" }} />
+                        <Input onChange={(a) => setCode(a.target.value)} placeholder="Digite o Código" _placeholder={{ color: "gray.800" }} />
                         </Field>
                     </Field>
                     <Flex justifyContent="right" mt="6">

@@ -12,7 +12,6 @@ export default function Pagination({datalength, pageSize, page, setPage}) {
 const count = datalength
 
   return (
-    <Box mb="1">
       <PaginationRoot
         page={page}
         count={count}
@@ -27,7 +26,6 @@ const count = datalength
           <PaginationNextTrigger onClick={() => setPage(prev => Math.min(prev + 1, Math.ceil(datalength / pageSize)))}/>
         </HStack>
       </PaginationRoot>
-      </Box>
   )
 
 }
