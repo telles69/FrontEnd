@@ -6,8 +6,8 @@ import Background from "@/layouts/background"
 import axios from "../../../utils/axios"
 import { Alert } from "@/components/ui/alert"
 import { useRouter } from 'next/router'
+import { Toaster ,toaster } from "@/components/ui/toaster"
 import { useState, useEffect } from "react"
-import { toast, ToastContainer } from "react-toastify";
 import "toastify-js/src/toastify.css";
 
 const Demo = () => {
@@ -21,6 +21,7 @@ const Demo = () => {
     
     const DoLogin = async (email, senha) => {
         try {
+            
             const response = await axios.post('http://localhost:3333/usuario/login', {
                 email: email,
                 senha: senha
@@ -29,7 +30,10 @@ const Demo = () => {
                 localStorage.setItem('token', response.data.token)
                 goInicial()
             }else{
-                toast.error(response.message)
+                toaster.create({
+                    description: "Credenciais Invalidas",
+                    type: "error",
+                  })
             }
         } catch (error) {
             SetError("Otario");
@@ -40,7 +44,7 @@ const Demo = () => {
         <Box>
             <Background></Background>
             <Login DoLogin={DoLogin}></Login>
-            <ToastContainer/>
+            <Toaster />
         </Box>
     );
 };

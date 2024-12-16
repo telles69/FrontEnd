@@ -12,6 +12,7 @@ import Dialog from "./ClienteDialog"
 import Dialog2 from "./ClienteDialog2"
 import { FaTrash } from "react-icons/fa";
 import Pagination from "./Pagination"
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default function Clientes({ data=[], handleclick, deleta, look, DoIt, allCargos=[], DoItCreate }) {
 
@@ -41,6 +42,10 @@ export default function Clientes({ data=[], handleclick, deleta, look, DoIt, all
         console.log(token)
     }
 
+    const voltar = async () => {
+        router.push('/administrador/inicial')
+    }
+
     useEffect(() => {
        verifyAdmin();
        verifyToken();
@@ -68,11 +73,15 @@ export default function Clientes({ data=[], handleclick, deleta, look, DoIt, all
                         Usuários Cadastrados
                     </Box>
                 </Box>
-                
+                <HStack>
+                <Box textAlign="left" mb="3" >
+                <Button size="sm" variant="outline" onClick={() => voltar()}><IoMdArrowRoundBack /></Button>
+                </Box>
                 <Box textAlign="right" mb="3" >
-                <Button colorPalette="red" size="sm" marginRight={"2vh"} variant="outline" onClick={ () => logout()}>Logout</Button>
+                <Button marginLeft={"60vh"} colorPalette="red" size="sm" marginRight={"2vh"} variant="outline" onClick={ () => logout()}>Logout</Button>
                 <Dialog2 DoItCreate={DoItCreate} look={look} allCargos={allCargos}></Dialog2>
                 </Box>
+                </HStack>
                 <Box mb="3">
                 <Table.Root size="lg">
                     <Table.Header>

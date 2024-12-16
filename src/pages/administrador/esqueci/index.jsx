@@ -7,14 +7,21 @@ import axios from "axios"
 import { Alert } from "@/components/ui/alert"
 import { useRouter } from 'next/router'
 import { useState, useEffect } from "react"
-import { Toaster, toaster } from "@/components/ui/toaster"
+import { toaster } from "@/components/ui/toaster"
 import Forgot from "@/components/Esqueci"
+import React from 'react';
+
 
 export default function Demo() {
 
     const[allData, setAllData]=useState({})
     const[error, setError]=useState('')
-    const[contador, setContador]=useState(1)
+    const [passo , setPasso] = useState(1)
+    const [email, setEmail] = useState('')
+    const [code, setCode] = useState('')
+    const [senha, setSenha] = useState('')
+    const dois1 = {email, code}
+    const dois2 = {senha, email}
 
     const forgot1 = async (email) => {
         try {
@@ -24,7 +31,7 @@ export default function Demo() {
             })
             if (response.data.type === 'success') {
                 setAllData(response.data);
-                setContador(2)
+                setPasso(2)
             }else{
                 setError('Email não encontrado 2222')
             }
@@ -40,7 +47,7 @@ export default function Demo() {
             })
             if (response.data.type === 'success') {
                 setAllData(response.data);
-                setContador(3)
+                setPasso(3)
             }else{
                 setError('Email não encontrado 3333')
             }
@@ -55,7 +62,8 @@ export default function Demo() {
             })
             if (response.data.type === 'success') {
                 setAllData(response.data);
-                setContador(null)
+                setPasso(4)
+                goLogin()
             }else{
                 setError('Email não encontrado 4444')
             }
@@ -63,10 +71,73 @@ export default function Demo() {
             setError("erro forgot3")
         }
     }
+    
+    const router = useRouter()
+    const goLogin = () => {
+        router.push('/administrador/login')
+    }
     return(
     <Box>
     <Background></Background>
-    <Forgot forgot1={forgot1} allData={allData} contador={contador} forgot2={forgot2} forgot3={forgot3}></Forgot>
+    <Center minHeight="100vh">
+                <Box
+                    width="25%"
+                    height="25%"
+                    p="6"
+                    bg="rgba(255, 255, 255, 0.2)"
+                    borderRadius="lg"
+                    boxShadow="lg"
+                    backdropFilter="blur(10px)" 
+                    border="1px solid rgba(255, 255, 255, 0.3)" 
+                >
+                   <Box textAlign="center" mb="6">
+                        <Image src="https://gainblers.com/imagenes/casas/pokerstarssports/pokerstars-logo.png" alt="LOGO" />
+                        <Box as="h2" fontSize="2xl" fontWeight="bold">
+                            Esqueci minha senha
+                        </Box>
+                    </Box>
+                {passo === 1 &&(
+                    <>
+                    <Field>
+                        <Field label="Email">
+                        <Input onChange={(a) => setEmail(a.target.value)} placeholder="Digite seu Email" _placeholder={{ color: "gray.800" }} />
+                        </Field>
+                    </Field>
+                    <Flex justifyContent="right" mt="6">
+                    <Button variant="solid" colorScheme="teal" onClick={() => forgot1(email)}>
+                            Proximo 
+                        </Button>
+                        </Flex>
+                        </>)}
+                        {passo === 2 &&(
+                    <>
+                    <Field>
+                        <Field label="Código">
+                        <Input onChange={(a) => setCode(a.target.value)} placeholder="Digite o Código" _placeholder={{ color: "gray.800" }} />
+                        </Field>
+                    </Field>
+                    <Flex justifyContent="right" mt="6">
+                    <Button variant="solid" colorScheme="teal" onClick={() => forgot2(dois1)}>
+                            Proximo 
+                        </Button>
+                        </Flex>
+                        </>)}
+                        {passo === 3 &&(
+                    <>
+                    <Field>
+                        <Field label="Nova Senha">
+                        <Input onChange={(a) => setSenha(a.target.value)} placeholder="Digite a nova senha" _placeholder={{ color: "gray.800" }} />
+                        </Field>
+                    </Field>
+                    <Flex justifyContent="right" mt="6">
+                    <Button variant="solid" colorScheme="teal" onClick={() => forgot3(dois2)}>
+                            Confirmar 
+                        </Button>
+                        </Flex>
+                        </>)}
+                        
+                </Box>
+        </Center>
     </Box>
 )
 }
