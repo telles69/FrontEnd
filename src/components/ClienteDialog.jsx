@@ -3,7 +3,6 @@ import { Field } from "@/components/ui/field"
 import { PasswordInput, PasswordStrengthMeter } from "@/components/ui/password-input"   
 import { CheckboxCard } from "@/components/ui/checkbox-card"
 import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
-import axios from '../utils/axios';
 import { useState, useEffect } from "react"
 import React from 'react';
 import { RiPencilFill } from "react-icons/ri";

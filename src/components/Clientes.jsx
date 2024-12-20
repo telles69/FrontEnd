@@ -1,13 +1,7 @@
 import { Button, Card, Input, Stack, Flex, Center, Box, Image, Icon, Text, HStack, Link, Table } from "@chakra-ui/react"
-import { Field } from "@/components/ui/field"
-import { PasswordInput, PasswordStrengthMeter } from "@/components/ui/password-input"
 import { useRouter } from 'next/router'
-import { CheckboxCard } from "@/components/ui/checkbox-card"
-import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
-import axios from '../utils/axios';
 import { useState, useEffect } from "react"
 import React from 'react';
-import { RiPencilFill } from "react-icons/ri";
 import Dialog from "./ClienteDialog"
 import Dialog2 from "./ClienteDialog2"
 import { FaTrash } from "react-icons/fa";
@@ -16,8 +10,6 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default function Clientes({ data=[], handleclick, deleta, look, DoIt, allCargos=[], DoItCreate }) {
 
-    const [allData, SetAllData] = useState([])
-    const [error, SetError] = useState('')
     const [page, setPage] = useState(1)
     
     const pageSize = 10;

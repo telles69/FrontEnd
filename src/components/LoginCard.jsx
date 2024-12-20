@@ -4,9 +4,6 @@ import { PasswordInput, PasswordStrengthMeter } from "@/components/ui/password-i
 import { useRouter } from 'next/router'
 import { FaGoogle } from "react-icons/fa6"
 import { SiApple } from "react-icons/si"
-import { CheckboxCard } from "@/components/ui/checkbox-card"
-import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
-import axios from '../utils/axios';
 import { useState } from "react"
 
 

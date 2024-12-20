@@ -1,10 +1,7 @@
 import { Button, Card, Input, Stack, Flex, Center, Box, Image } from "@chakra-ui/react"
-import { Field } from "@/components/ui/field"
-import { HStack } from "@chakra-ui/react"
 import Login from "@/components/LoginCard"
 import Background from "@/layouts/background"
 import axios from "../../../utils/axios"
-import { Alert } from "@/components/ui/alert"
 import { useRouter } from 'next/router'
 import { Toaster ,toaster } from "@/components/ui/toaster"
 import { useState, useEffect } from "react"

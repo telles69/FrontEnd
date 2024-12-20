@@ -1,15 +1,8 @@
 import { Button, Card, Input, Stack, Flex, Center, Box, Image, Icon, Text, HStack, Link, Table } from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
-import { PasswordInput, PasswordStrengthMeter } from "@/components/ui/password-input"
 import { useRouter } from 'next/router'
-import { FaGoogle } from "react-icons/fa6"
-import { SiApple } from "react-icons/si"
-import { CheckboxCard } from "@/components/ui/checkbox-card"
-import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
-import axios from '../utils/axios';
 import { useState, useEffect } from "react"
 import React from 'react';
-import { RiPencilFill } from "react-icons/ri";
 
 export default function Forgot({forgot1, allData={}, contador, forgot2, forgot3}) {
 

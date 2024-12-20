@@ -7,10 +7,9 @@ import axios from "axios"
 import { Alert } from "@/components/ui/alert"
 import { useRouter } from 'next/router'
 import { useState, useEffect } from "react"
-import { toaster } from "@/components/ui/toaster"
 import Forgot from "@/components/Esqueci"
 import React from 'react';
-
+import { Toaster ,toaster } from "@/components/ui/toaster"
 
 export default function Demo() {
 
@@ -33,7 +32,10 @@ export default function Demo() {
                 setAllData(response.data);
                 setPasso(2)
             }else{
-                setError('Email não encontrado 2222')
+                toaster.create({
+                    description: "Email Invalido",
+                    type: "error",
+                  })
             }
         } catch (error) {
             setError("erro forgot1")
@@ -49,7 +51,10 @@ export default function Demo() {
                 setAllData(response.data);
                 setPasso(3)
             }else{
-                setError('Email não encontrado 3333')
+                toaster.create({
+                    description: "Código incorreto",
+                    type: "error",
+                  })
             }
         } catch (error) {
             setError("erro forgot2")
@@ -65,7 +70,10 @@ export default function Demo() {
                 setPasso(4)
                 goLogin()
             }else{
-                setError('Email não encontrado 4444')
+                toaster.create({
+                    description: "Ocorreu um erro",
+                    type: "error",
+                  })
             }
         } catch (error) {
             setError("erro forgot3")
@@ -137,6 +145,7 @@ export default function Demo() {
                         </>)}
                         
                 </Box>
+                <Toaster />
         </Center>
     </Box>
 )
