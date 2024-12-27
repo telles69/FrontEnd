@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { FileUploadList, FileUploadRoot, FileUploadTrigger, FileUploadDropzone } from "@/components/ui/file-upload"
 import { Button, Card, Input, Stack, Flex, Center, Box, Image, Icon, Text, HStack, Link } from "@chakra-ui/react"
 import { Toaster, toaster } from "@/components/ui/toaster"
+import { useRouter } from 'next/router'
 
 export default function Demo() {
 
@@ -17,12 +18,8 @@ export default function Demo() {
             })
             return;
         }
-        console.log("modelo")
-        console.log(modelo)
         const formData = new FormData();
         formData.append("file", modelo);
-        console.log("formdata")
-        console.log(formData)
         try {
             const response = await axios.post("http://localhost:3333/upload/modelo1", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
@@ -52,6 +49,10 @@ export default function Demo() {
         if (file && file.length > 0) {
             setModelo(file[0]);
         }
+    }
+    const router = useRouter()
+    const voltar = async () => {
+        router.push('/administrador/inicial')
     }
 
     return (
@@ -89,9 +90,10 @@ export default function Demo() {
                             <FileUploadList modelo={modelo} showSize clearable />
                         </FileUploadRoot>
                     </Box>
-                    <Flex justifyContent="center" mt="3">
+                    <HStack justifyContent="center" mt="3" ml="3">
+                        <Button variant="outline" onClick={() => voltar()}>Voltar</Button>
                         <Button onClick={() => uploadFile()}>Enviar</Button>
-                    </Flex>
+                    </HStack>
                 </Box>
             </Center>
             <Toaster />
